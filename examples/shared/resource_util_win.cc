@@ -39,7 +39,7 @@ class BinaryResourceProvider : public CefResourceManager::Provider {
     DCHECK(!root_url.empty());
   }
 
-  bool OnRequest(scoped_refptr<CefResourceManager::Request> request) OVERRIDE {
+  bool OnRequest(scoped_refptr<CefResourceManager::Request> request) override {
     CEF_REQUIRE_IO_THREAD();
 
     const std::string& url = request->url();
@@ -98,18 +98,18 @@ bool GetResourceString(const std::string& resource_path,
 CefRefPtr<CefStreamReader> GetResourceReader(const std::string& resource_path) {
   int resource_id = GetResourceId(resource_path);
   if (resource_id == 0)
-    return NULL;
+    return nullptr;
 
   DWORD dwSize;
   LPBYTE pBytes;
 
   if (LoadBinaryResource(resource_id, dwSize, pBytes)) {
     return CefStreamReader::CreateForHandler(
-        new CefByteReadHandler(pBytes, dwSize, NULL));
+        new CefByteReadHandler(pBytes, dwSize, nullptr));
   }
 
   NOTREACHED();  // The resource should be found.
-  return NULL;
+  return nullptr;
 }
 
 }  // namespace shared
